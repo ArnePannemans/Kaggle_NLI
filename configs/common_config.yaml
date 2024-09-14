@@ -1,0 +1,20 @@
+# configs/base_config.yaml
+
+prompt_template: |
+  Given the following sentences, determine the relationship between the premise and the hypothesis.
+  Premise: '{premise}'
+  Hypothesis: '{hypothesis}'
+  What is the relationship between the premise and hypothesis? Answer with only one word: 'entailment', 'neutral', or 'contradiction'; Give no further explanation.
+  Answer:
+
+output_mapping:
+  0: "entailment"
+  1: "neutral"
+  2: "contradiction"
+
+inverse_output_mapping:
+  "entailment": 0
+  "neutral": 1
+  "contradiction": 2
+
+system_message: "You are a helpful AI assistant trained to determine the logical relationship between pairs of sentences. The relationships can be 'entailment', 'neutral', or 'contradiction'."
