@@ -1,0 +1,45 @@
+{
+    "timestamp": "20240915_175359",
+    "model_name": "phi3_small",
+    "model_path": "base",
+    "config": {
+        "prompt_template": "Given the following sentences, determine the relationship between the premise and the hypothesis.\nPremise: '{premise}'\nHypothesis: '{hypothesis}'\nWhat is the relationship between the premise and hypothesis? Answer with only one word: 'entailment', 'neutral', or 'contradiction'; Give no further explanation.\nAnswer:\n",
+        "output_mapping": {
+            "0": "entailment",
+            "1": "neutral",
+            "2": "contradiction"
+        },
+        "inverse_output_mapping": {
+            "entailment": 0,
+            "neutral": 1,
+            "contradiction": 2
+        },
+        "system_message": "You are a helpful AI assistant trained to determine the logical relationship between pairs of sentences. The relationships can be 'entailment', 'neutral', or 'contradiction'.",
+        "model": {
+            "name": "phi3_small",
+            "model_identifier": "microsoft/Phi-3-small-8k-instruct",
+            "type": "phi"
+        },
+        "evaluation": {
+            "batch_size": 64
+        },
+        "data": {
+            "test_file": "data/split/test.csv"
+        },
+        "logging": {
+            "logging_level": "INFO",
+            "output_dir": "results/experiment_logs"
+        },
+        "generation_args": {
+            "max_new_tokens": 5,
+            "return_full_text": false,
+            "do_sample": false
+        },
+        "seed": 42
+    },
+    "results": {
+        "accuracy": 0.7663366336633664,
+        "f1_score": 0.763470761627129,
+        "total_time": 265.25022768974304
+    }
+}

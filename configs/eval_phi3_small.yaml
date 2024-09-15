@@ -1,0 +1,25 @@
+# configs/eval_phi3.yaml
+
+model:
+  name: 'phi3_small'
+  model_identifier: 'microsoft/Phi-3-small-8k-instruct'
+  type: 'phi'
+  # If no 'finetuned_model_path' specified; base model will be loaded
+  # finetuned_model_path: 'models/phi3/microsoft/Phi-3-mini-4k-instruct_finetuned/20240914_221204'
+
+evaluation:
+  batch_size: 64
+
+data:
+  test_file: 'data/split/test.csv'
+
+logging:
+  logging_level: 'INFO'
+  output_dir: 'results/experiment_logs'
+
+generation_args:
+  max_new_tokens: 5
+  return_full_text: False
+  do_sample: False
+
+seed: 42

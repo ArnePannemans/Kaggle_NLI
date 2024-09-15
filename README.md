@@ -66,12 +66,19 @@ This will start the fine-tuning process using the settings defined in your confi
 
 ## 📝 Experiments and Results
 
-Below are the results from initial experiments using Phi-3 models:
+### **Out-of-the-Box Results** (fp16):
 
-1. **Phi-3 Mini 4k Instruct (Out-of-the-Box, fp16)** : Accuracy: **67.3%**
-2. **Phi-3 Mini 4k Instruct (Fine-Tuned; fp16)** : Accuracy: **81.1%**
-1. **Phi-3.5 Mini Instruct (Out-of-the-Box, fp16)** : Accuracy: **74.1%**
-2. **Phi-35 Mini Instruct (Fine-Tuned; fp16)** : Accuracy: **81.9%**
+1. **Phi-3 Mini 4k Instruct**: Accuracy: **67.3%**
+2. **Phi-3.5 Mini Instruct**: Accuracy: **74.1%**
+3. **Phi-3 Small Instruct**: Accuracy: **76.6%**
+
+### **Fine-Tuned Results** (fp16):
+
+1. **Phi-3 Mini 4k Instruct**: Accuracy: **81.1%**
+2. **Phi-3.5 Mini Instruct**: Accuracy: **81.9%**
+
+---
+
 
 ## 📌 Backlog
 

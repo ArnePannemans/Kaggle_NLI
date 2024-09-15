@@ -1,0 +1,41 @@
+# configs/train_phi3.yaml
+
+model:
+  name: 'phi3_small'
+  model_identifier: 'microsoft/Phi-3-small-8k-instruct'
+  type: 'phi'
+
+training:
+  num_train_epochs: 1
+  per_device_train_batch_size: 32
+  per_device_eval_batch_size: 32
+  learning_rate: !!float 5e-5 # Make sure this is seen as float and not string
+  gradient_accumulation_steps: 2
+  gradient_checkpointing: true
+  max_grad_norm: 1.0
+  evaluation_strategy: 'steps'
+  save_strategy: 'steps'
+  save_steps: 20
+  eval_steps: 20
+  fp16: true
+  load_best_model_at_end: true
+  save_total_limit: 2
+  logging_steps: 5
+
+lora:
+  r: 32
+  lora_alpha: 64
+  lora_dropout: 0.05
+  bias: 'none'
+  task_type: 'CAUSAL_LM'
+  target_modules: 'all-linear'
+
+data:
+  train_file: 'data/split/train.csv'
+  val_file: 'data/split/val.csv'
+
+logging:
+  logging_level: 'INFO'
+  output_dir: 'results/experiment_logs'
+
+seed: 42
