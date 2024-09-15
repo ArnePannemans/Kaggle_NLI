@@ -2,6 +2,12 @@
 
 This repository contains code and experiments related to the **Contradictory, My Dear Watson** [Kaggle competition](https://www.kaggle.com/competitions/contradictory-my-dear-watson). My main motivation for this project was to play around with my new [RTX 3090 PC build](https://pcpartpicker.com/user/arnePannemans/saved/MgtPzy) and experiment with state-of-the-art (smaller) large language models to see how fine-tuning can improve their performance for the task. A key challenge in this project is working within the 24GB VRAM limit of the RTX 3090, which requires careful model selection and optimization such as quantzation to maximise model performance. 
 
+I divided the data using the following split:
+- **Training Set**: 9091 examples (~75%)
+- **Validation Set**: 1516 examples (~12.5%)
+- **Test Set**: 1516 examples (~12.5%)
+
+
 
 ## 📖 Background
 
@@ -66,19 +72,20 @@ This will start the fine-tuning process using the settings defined in your confi
 
 ## 📝 Experiments and Results
 
-### **Out-of-the-Box Results** (fp16):
+### **Zero-Shot Results** (fp16):
 
 1. **Phi-3 Mini 4k Instruct**: Accuracy: **67.3%**
 2. **Phi-3.5 Mini Instruct**: Accuracy: **74.1%**
 3. **Phi-3 Small Instruct**: Accuracy: **76.6%**
+
+<img src="images/zero_shot_results.png" alt="Zero-Shot Results" width="500"/>
 
 ### **Fine-Tuned Results** (fp16):
 
 1. **Phi-3 Mini 4k Instruct**: Accuracy: **81.1%**
 2. **Phi-3.5 Mini Instruct**: Accuracy: **81.9%**
 
----
-
+<img src="images/fine_tuned_results.png" alt="Fine-Tuned Results" width="500"/>
 
 ## 📌 Backlog
 
