@@ -48,7 +48,6 @@ class PhiModel(BaseModel):
         self.pipeline = None
         self.logger = logging.getLogger(__name__)
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
     
     def _setup_tokenizer_for_finetuning(self):
         """
