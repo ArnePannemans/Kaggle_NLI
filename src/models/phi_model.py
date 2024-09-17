@@ -99,7 +99,7 @@ class PhiModel(BaseModel):
             if os.path.exists(finetuned_model_path):
                 self.logger.info(f"Loading fine-tuned model from {finetuned_model_path}")
                 base_model = AutoModelForCausalLM.from_pretrained(model_identifier, **model_kwargs)
-                self.tokenizer = AutoTokenizer.from_pretrained(finetuned_model_path)
+                self.tokenizer = AutoTokenizer.from_pretrained(finetuned_model_path, trust_remote_code=True)
                 
                 base_model.resize_token_embeddings(len(self.tokenizer))
                 base_model.config.pad_token_id = self.tokenizer.pad_token_id
@@ -115,12 +115,12 @@ class PhiModel(BaseModel):
             if os.path.exists(base_model_dir):  # From local directory
                 self.logger.info(f"Loading base model from {base_model_dir}")
                 self.model = AutoModelForCausalLM.from_pretrained(base_model_dir, **model_kwargs)
-                self.tokenizer = AutoTokenizer.from_pretrained(base_model_dir)
+                self.tokenizer = AutoTokenizer.from_pretrained(base_model_dir, trust_remote_code=True)
                  
             else:   # Download from Huggingface
                 self.logger.info(f"Base model not found locally. Downloading from '{model_identifier}'...")
                 self.model = AutoModelForCausalLM.from_pretrained(model_identifier, **model_kwargs)
-                self.tokenizer = AutoTokenizer.from_pretrained(model_identifier)
+                self.tokenizer = AutoTokenizer.from_pretrained(model_identifier, trust_remote_code=True)
                 os.makedirs(base_model_dir, exist_ok=True)
                 self.model.save_pretrained(base_model_dir)
                 self.tokenizer.save_pretrained(base_model_dir)
