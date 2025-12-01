@@ -80,10 +80,13 @@ class PhiModel(BaseModel):
             FileNotFoundError: If 'finetuned_model_path' is specified but does not exist.
         """
         model_config = self.config['model']
+        # Security Note: trust_remote_code is set to False by default to prevent RCE vulnerabilities
+        # (CVE-2025-32434, CVE-2025-3730, CVE-2025-2953). Only enable if you explicitly trust the model source.
+        # For microsoft/Phi-3 models, this can be safely set to True if needed for model-specific code.
         model_kwargs = {
             'device_map': 'auto',
             'torch_dtype': torch.float16 if torch.cuda.is_available() else torch.float32,
-            'trust_remote_code': True,
+            'trust_remote_code': False,  # Changed from True to False for security (UCD-612)
             'attn_implementation': "flash_attention_2",
             'use_cache': False,
         }
@@ -99,7 +102,7 @@ class PhiModel(BaseModel):
             if os.path.exists(finetuned_model_path):
                 self.logger.info(f"Loading fine-tuned model from {finetuned_model_path}")
                 base_model = AutoModelForCausalLM.from_pretrained(model_identifier, **model_kwargs)
-                self.tokenizer = AutoTokenizer.from_pretrained(finetuned_model_path, trust_remote_code=True)
+                self.tokenizer = AutoTokenizer.from_pretrained(finetuned_model_path, trust_remote_code=False)
                 
                 base_model.resize_token_embeddings(len(self.tokenizer))
                 base_model.config.pad_token_id = self.tokenizer.pad_token_id
@@ -115,12 +118,12 @@ class PhiModel(BaseModel):
             if os.path.exists(base_model_dir):  # From local directory
                 self.logger.info(f"Loading base model from {base_model_dir}")
                 self.model = AutoModelForCausalLM.from_pretrained(base_model_dir, **model_kwargs)
-                self.tokenizer = AutoTokenizer.from_pretrained(base_model_dir, trust_remote_code=True)
+                self.tokenizer = AutoTokenizer.from_pretrained(base_model_dir, trust_remote_code=False)
                  
             else:   # Download from Huggingface
                 self.logger.info(f"Base model not found locally. Downloading from '{model_identifier}'...")
                 self.model = AutoModelForCausalLM.from_pretrained(model_identifier, **model_kwargs)
-                self.tokenizer = AutoTokenizer.from_pretrained(model_identifier, trust_remote_code=True)
+                self.tokenizer = AutoTokenizer.from_pretrained(model_identifier, trust_remote_code=False)
                 os.makedirs(base_model_dir, exist_ok=True)
                 self.model.save_pretrained(base_model_dir)
                 self.tokenizer.save_pretrained(base_model_dir)
